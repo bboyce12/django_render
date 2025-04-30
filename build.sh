@@ -6,7 +6,7 @@ set -o errexit
 pip install -r requirements.txt
 
 # Convert static asset files
-python django_render/manage.py collectstatic --no-input
+python ./django_render/manage.py collectstatic --no-input
 
 # Apply any outstanding database migrations
-python django_render/manage.py migrate
+python ./django_render/manage.py migrate
