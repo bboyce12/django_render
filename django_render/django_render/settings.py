@@ -14,6 +14,7 @@ from pathlib import Path
 
 # Import dj-database-url at the beginning of the file.
 import dj_database_url 
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,12 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u)4$hv+z@dyt9i8p#f-j34z$kp=b-qrtv%+o76lohhiokb&&a%'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('AllOWED_HOSTS').split(' ')
 
 
 # Application definition
@@ -74,10 +75,11 @@ WSGI_APPLICATION = 'django_render.wsgi.application'
 
 
 # Replace the SQLite DATABASES configuration with PostgreSQL:
+database_url = os.environ.get('DATABASE_URL')
 DATABASES = {
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
-        default='postgresql://postgres:postgres@localhost:5432/mysite',
+        default=database_url,
         conn_max_age=600
     )
 }
